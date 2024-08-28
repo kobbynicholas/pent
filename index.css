@@ -5,7 +5,7 @@ body {
     font-family: sans-serif;
     line-height: 1.5;
     min-height: 100vh;
-    background: #f0f0f0;
+    background: yellow;
     flex-direction: column;
     margin: 0;
 }
@@ -21,6 +21,17 @@ body {
 }
 
 h1 {
-    color: #4CAF50;
+    color: blue;
 }
 
+#submit{
+	border: none;
+	background-color: rgb(107, 8, 66);
+	color: rgb(247, 246, 246);
+	width: 100px;
+	margin-top: 10px;
+	border-radius: 7px;
+}
+#submit:hover{
+	background-color: #e4aad7;
+}

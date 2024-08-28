@@ -92,21 +92,21 @@ ul li{
 }
 ul li a{
 	text-decoration: none;
-	color: #ggf;
+	color: white;
 	padding: 5px 20px;
 	border: 1px solid transparent;
-	transition: 0.7s ease;
+	transition: 2.7s ease;
 
 }
 
 ul li a:hover{
 	background-color: #fff;
-	color: #000;
+	color: black;
 }
 
 ul li.active a{
 background-color:#fff;
-	color: #000;
+	color: red;
 
 }
 

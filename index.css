@@ -11,6 +11,12 @@ body {
     margin: 0;
 }
 
+.logo{
+    display: flex;
+    align-items: center;	
+}
+
+
 .main {
     background-color: yellow;
     border-radius: 15px;

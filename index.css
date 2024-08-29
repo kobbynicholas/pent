@@ -9,6 +9,15 @@ body {
     background: #f0f0f0;
     flex-direction: column;
     margin: 0;
+
+}
+
+header{
+    display: flex;
+    align-items: center;	
+}
+
+	
 }
 
 .logo{

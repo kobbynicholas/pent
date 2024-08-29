@@ -27,6 +27,7 @@ body {
     transition: transform 0.2s;
     width: 500px;
     text-align: center;
+    align-items: center;
 }
 
 h1 {

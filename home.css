@@ -29,10 +29,10 @@ header{
 .main {
     background-color: blue;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     padding: 10px 20px;
     transition: transform 0.2s;
-    width: 500px;
+    width: 400px;
     text-align: center;
     align-items: center;
 }

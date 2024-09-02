@@ -30,13 +30,27 @@ header{
 .main {
     background-color: yellow;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     padding: 10px 20px;
     transition: transform 5.2s;
     width: 300px;
     text-align: center;
     align-items: center;
 }
+
+.main1 {
+    background-color: yellow;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    transition: transform 5.2s;
+    width: 360px;
+    hieght: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+
 
 h1 {
     color: red;
@@ -58,7 +72,7 @@ h4 {
 	border: none;
 	background-color: rgb(107, 8, 66);
 	color: rgb(247, 246, 246);
-	width: 340px;
+	width: 360px;
 	margin-top: 10px;
 	border-radius: 7px;
 }

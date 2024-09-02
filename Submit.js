@@ -10,7 +10,6 @@ form.addEventListener('submit', e => {
   .catch(error => console.error('Error!', error.message))
 })
 
-
 function showDiv() {
   document.getElementById('submit').style.display = "flex";
   document.getElementById('loadingGif').style.display = "flex";

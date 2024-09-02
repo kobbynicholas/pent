@@ -71,9 +71,9 @@ h4 {
 	border: none;
 	background-color: rgb(107, 8, 66);
 	color: rgb(247, 246, 246);
-	width: 360px;
+	width: 50px;
 	margin-top: 10px;
-	border-radius: 7px;
+	border-radius: 30px;
 }
 #submit:hover{
 	background-color: red;
@@ -102,7 +102,7 @@ input {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 16;
+    font-size: 18px;
 }
 
 button {

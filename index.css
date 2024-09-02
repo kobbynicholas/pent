@@ -14,8 +14,8 @@ body {
 
 header{
     display: flex;
-    align-items: center;
-    color: red;
+    align-items: left;
+    color: yellow;
 }
 
 	

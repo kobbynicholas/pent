@@ -50,7 +50,7 @@ header{
 }
 
 .main2 {
-    background-color: black;
+    background-color: gray;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.0);
     transition: transform 1.2s;
@@ -59,9 +59,6 @@ header{
     align-items: center;
     margin-top: 35px;
 }
-
-
-
 
 
 h1 {

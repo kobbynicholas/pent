@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Search List</title>
+    <style>
+        /* Basic styling for search box and list */
+        #searchBox {
+            margin: 20px;
+            padding: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+        #list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .list-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="searchBox" placeholder="Search...">
+
+    <ul id="list"></ul>
+
+    <script>
+        // Google Sheets API settings
+        const API_KEY = 'https://script.google.com/macros/s/AKfycby2eX2cpSh7IskTIVf4LSNkTgWB8hnTgt4qtDiIdYPWPiQBuJUPRklYem_Ay2uCZNcI3Q/exec';
+        const SHEET_ID = 'Sheet1';
+        const RANGE = 'Sheet1!A2:A'; // Adjust range as needed
+
+        // Fetch data from Google Sheets
+        async function fetchData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.values;
+        }
+
+        // Render the list and set up search functionality
+        function renderList(items) {
+            const list = document.getElementById('list');
+            list.innerHTML = items.map(item => `<li class="list-item">${item[0]}</li>`).join('');
+
+            document.getElementById('searchBox').addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const filteredItems = items.filter(item => item[0].toLowerCase().includes(query));
+                list.innerHTML = filteredItems.map(item => `<li class="list-item">${item[0]}</li>`).join('');
+            });
+        }
+
+        // Initialize
+        fetchData().then(data => renderList(data));
+    </script>
+
+</body>
+</html>

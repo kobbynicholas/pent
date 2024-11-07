@@ -3,60 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Search List</title>
-    <style>
-        /* Basic styling for search box and list */
-        #searchBox {
-            margin: 20px;
-            padding: 10px;
-            width: 100%;
-            max-width: 500px;
-        }
-        #list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .list-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
+    <title>Google Sheets Data Viewer and Editor</title>
+    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
 
-    <input type="text" id="searchBox" placeholder="Search...">
+<h2>Google Sheets Data Viewer and Editor</h2>
+<button onclick="loadSheetData()">Load Data</button>
+<table id="dataTable" border="1">
+    <thead>
+        <tr>
+            <!-- Dynamic table headers -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dynamic table rows -->
+    </tbody>
+</table>
+<button onclick="saveChanges()">Save Changes</button>
 
-    <ul id="list"></ul>
+<script>
+    const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyBIWtEjHca_7wAuRZs3iixEyqhBH0-A4W8';
+    const SHEET_ID = '1d9SkOIB_lqoxNYjuoEmiDM15bYcp_skuzndy_mkeUJ8';
+    const RANGE = 'Sheet1!A2:B'; // Change to your desired range
 
-    <script>
-        // Google Sheets API settings
-        const API_KEY = 'AIzaSyBIWtEjHca_7wAuRZs3iixEyqhBH0-A4W8apps.googleusercontent.com';
-        const SHEET_ID = '1d9SkOIB_lqoxNYjuoEmiDM15bYcp_skuzndy_mkeUJ8';
-        const RANGE = 'Sheet1!A2:A'; // Adjust range as needed
+    function initClient() {
+        gapi.client.init({
+            apiKey: AIzaSyBIWtEjHca_7wAuRZs3iixEyqhBH0-A4W8,
+            clientId: CLIENT_ID,
+            discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+            scope: "https://www.googleapis.com/auth/spreadsheets"
+        }).then(() => {
+            loadSheetData();
+        }, error => console.error(JSON.stringify(error, null, 2)));
+    }
 
-        // Fetch data from Google Sheets
-        async function fetchData() {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            return data.values;
-        }
+    function loadSheetData() {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: SHEET_ID,
+            range: RANGE
+        }).then(response => {
+            const rows = response.result.values;
+            if (rows.length) {
+                renderTable(rows);
+            } else {
+                console.log('No data found.');
+            }
+        }, error => console.error(JSON.stringify(error, null, 2)));
+    }
 
-        // Render the list and set up search functionality
-        function renderList(items) {
-            const list = document.getElementById('list');
-            list.innerHTML = items.map(item => `<li class="list-item">${item[0]}</li>`).join('');
+    function renderTable(data) {
+        const tableHeader = document.querySelector("#dataTable thead tr");
+        const tableBody = document.querySelector("#dataTable tbody");
 
-            document.getElementById('searchBox').addEventListener('input', function() {
-                const query = this.value.toLowerCase();
-                const filteredItems = items.filter(item => item[0].toLowerCase().includes(query));
-                list.innerHTML = filteredItems.map(item => `<li class="list-item">${item[0]}</li>`).join('');
+        tableHeader.innerHTML = "";
+        tableBody.innerHTML = "";
+
+        // Set headers
+        data[0].forEach(header => {
+            const th = document.createElement("th");
+            th.innerText = header;
+            tableHeader.appendChild(th);
+        });
+
+        // Set rows
+        data.slice(1).forEach((row, rowIndex) => {
+            const tr = document.createElement("tr");
+            row.forEach((cell, colIndex) => {
+                const td = document.createElement("td");
+                td.contentEditable = true;
+                td.innerText = cell;
+                tr.appendChild(td);
             });
-        }
+            tableBody.appendChild(tr);
+        });
+    }
 
-        // Initialize
-        fetchData().then(data => renderList(data));
-    </script>
+    function saveChanges() {
+        const tableBody = document.querySelector("#dataTable tbody");
+        const updatedData = [];
+
+        Array.from(tableBody.rows).forEach(row => {
+            const rowData = [];
+            Array.from(row.cells).forEach(cell => rowData.push(cell.innerText));
+            updatedData.push(rowData);
+        });
+
+        gapi.client.sheets.spreadsheets.values.update({
+            spreadsheetId: SHEET_ID,
+            range: RANGE,
+            valueInputOption: "RAW",
+            resource: { values: [data[0], ...updatedData] } // Include header row
+        }).then(response => {
+            console.log('Data updated successfully');
+        }, error => console.error(JSON.stringify(error, null, 2)));
+    }
+
+    function handleClientLoad() {
+        gapi.load("client:auth2", initClient);
+    }
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js?onload=handleClientLoad"></script>
 
 </body>
 </html>
